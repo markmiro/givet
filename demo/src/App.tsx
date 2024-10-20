@@ -25,6 +25,7 @@ export default function App() {
         count is {count}
       </button>
       <BubbleForm>
+        {/* You'd expect submit to be at the BubbleForm but it's not because for submission is only triggered at that level. The actual submission only happens when the data is done bubbling up */}
         <BubbleArray<SubmitItem> onBubble={onSubmit} length={ids.length}>
           {(onBubble) =>
             ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)
