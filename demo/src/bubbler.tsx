@@ -38,11 +38,12 @@ export function BubbleForm({
     <BubbleProvider>
       {({ startBubble }) => (
         <form
-          {...formProps}
           onSubmit={(e) => {
             e.preventDefault();
             startBubble();
           }}
+          // put rest of props so they can overide the onSubmit
+          {...formProps}
         >
           {children}
         </form>
