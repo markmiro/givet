@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { randomSuperbWord } from "superb";
-import { GetArray, SubmitProvider, useSubmitLeaf } from "./givet";
+import { BubbleArray, BubbleProvider, useBubbler } from "./bubbler";
 import { uid } from "uid";
 
 export default function App() {
   const ids = [uid(3), uid(3), uid(3)];
   const [count, setCount] = useState(0);
   const [submitted, setSubmitted] = useState<unknown>(false);
-  const onSubmit = (data: unknown) => setSubmitted(data);
+  const onSubmit = (data: unknown) => {
+    // This is where we'd submit the data to the server.
+    setSubmitted(data);
+  };
 
   return (
     <>
@@ -15,23 +18,23 @@ export default function App() {
         count is {count}
       </button>
 
-      <SubmitProvider>
-        {({ startSubmit }) => (
+      <BubbleProvider>
+        {({ startBubble }) => (
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              startSubmit();
+              startBubble();
             }}
           >
-            <GetArray pushUp={onSubmit} length={ids.length}>
-              {(pushUp) =>
-                ids.map((id) => <Child key={id} id={id} pushUp={pushUp} />)
+            <BubbleArray onBubble={onSubmit} length={ids.length}>
+              {(onBubble) =>
+                ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)
               }
-            </GetArray>
+            </BubbleArray>
             <button type="submit">Submit</button>
           </form>
         )}
-      </SubmitProvider>
+      </BubbleProvider>
       {submitted && <pre>{JSON.stringify(submitted, null, 2)}</pre>}
     </>
   );
@@ -39,14 +42,14 @@ export default function App() {
 
 function Child({
   id,
-  pushUp,
+  onBubble,
 }: {
   id: string;
-  pushUp: (data: unknown) => void;
+  onBubble: (data: unknown) => void;
 }) {
   const [value, setValue] = useState(randomSuperbWord());
 
-  useSubmitLeaf(() => pushUp(value.toUpperCase()));
+  useBubbler(() => onBubble(value.toUpperCase()));
 
   return (
     <div>
