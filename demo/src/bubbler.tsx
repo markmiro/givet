@@ -55,7 +55,7 @@ export function BubbleForm({
 export function useBubbler(cb: () => void) {
   const ctx = useContext(BubbleContext);
   if (!ctx) {
-    throw new Error("useSubmitLeaf must be used within a SubmitProvider");
+    throw new Error("useBubbler must be used within a BubbleProvider");
   }
   const { bubbling, setBubbling } = ctx;
 
