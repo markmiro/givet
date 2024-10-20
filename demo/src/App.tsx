@@ -6,10 +6,9 @@ import { uid } from "uid";
 export default function App() {
   const ids = [uid(3), uid(3), uid(3)];
   const [count, setCount] = useState(0);
-  const [submitted, setSubmitted] = useState<unknown>(false);
   const onSubmit = (data: unknown) => {
     // This is where we'd submit the data to the server.
-    setSubmitted(data);
+    console.log("finish submit", data);
   };
 
   return (
@@ -35,7 +34,6 @@ export default function App() {
           </form>
         )}
       </BubbleProvider>
-      {submitted && <pre>{JSON.stringify(submitted, null, 2)}</pre>}
     </>
   );
 }
