@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { randomSuperbWord } from "superb";
-import { BubbleArray, BubbleProvider, useBubbler } from "./bubbler";
+import { BubbleArray, BubbleForm, useBubbler } from "./bubbler";
 import { uid } from "uid";
 import { z } from "zod";
 
@@ -24,24 +24,14 @@ export default function App() {
       <button onClick={() => setCount((count) => count + 1)}>
         count is {count}
       </button>
-
-      <BubbleProvider>
-        {({ startBubble }) => (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              startBubble();
-            }}
-          >
-            <BubbleArray<SubmitItem> onBubble={onSubmit} length={ids.length}>
-              {(onBubble) =>
-                ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)
-              }
-            </BubbleArray>
-            <button type="submit">Submit</button>
-          </form>
-        )}
-      </BubbleProvider>
+      <BubbleForm>
+        <BubbleArray<SubmitItem> onBubble={onSubmit} length={ids.length}>
+          {(onBubble) =>
+            ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)
+          }
+        </BubbleArray>
+        <button type="submit">Submit</button>
+      </BubbleForm>
     </>
   );
 }

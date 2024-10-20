@@ -30,6 +30,27 @@ export function BubbleProvider({
   );
 }
 
+export function BubbleForm({
+  children,
+  ...formProps
+}: { children: ReactNode } & React.FormHTMLAttributes<HTMLFormElement>) {
+  return (
+    <BubbleProvider>
+      {({ startBubble }) => (
+        <form
+          {...formProps}
+          onSubmit={(e) => {
+            e.preventDefault();
+            startBubble();
+          }}
+        >
+          {children}
+        </form>
+      )}
+    </BubbleProvider>
+  );
+}
+
 export function useBubbler(cb: () => void) {
   const ctx = useContext(BubbleContext);
   if (!ctx) {
