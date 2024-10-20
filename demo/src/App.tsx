@@ -6,7 +6,8 @@ import { uid } from "uid";
 export default function App() {
   const ids = [uid(3), uid(3), uid(3)];
   const [count, setCount] = useState(0);
-  const onSubmit = (data: unknown) => console.log("finish submit", data);
+  const [submitted, setSubmitted] = useState<unknown>(false);
+  const onSubmit = (data: unknown) => setSubmitted(data);
 
   return (
     <>
@@ -31,6 +32,7 @@ export default function App() {
           </form>
         )}
       </SubmitProvider>
+      {submitted && <pre>{JSON.stringify(submitted, null, 2)}</pre>}
     </>
   );
 }
