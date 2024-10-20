@@ -47,18 +47,18 @@ export function useBubbler(cb: () => void) {
   }, [bubbling, setBubbling, cb]);
 }
 
-export function BubbleArray({
+export function BubbleArray<T>({
   children,
   length,
   onBubble,
 }: {
-  children: (onBubble: (data: unknown) => void) => ReactNode;
+  children: (onBubble: (data: T) => void) => ReactNode;
   length: number;
-  onBubble: (data: unknown) => void;
+  onBubble: (data: T[]) => void;
 }) {
-  const arrayRef = useRef<unknown[]>([]);
+  const arrayRef = useRef<T[]>([]);
 
-  const getIt = (data: unknown) => {
+  const getIt = (data: T) => {
     arrayRef.current.push(data);
     if (arrayRef.current.length === length) {
       onBubble(arrayRef.current);

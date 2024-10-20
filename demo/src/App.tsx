@@ -2,11 +2,19 @@ import { useState } from "react";
 import { randomSuperbWord } from "superb";
 import { BubbleArray, BubbleProvider, useBubbler } from "./bubbler";
 import { uid } from "uid";
+import { z } from "zod";
+
+const submitSchema = z.array(z.string());
+
+submitSchema.parse(["tuna"]);
+
+type SubmitType = z.infer<typeof submitSchema>;
+type SubmitItem = SubmitType[number];
 
 export default function App() {
   const ids = [uid(3), uid(3), uid(3)];
   const [count, setCount] = useState(0);
-  const onSubmit = (data: unknown) => {
+  const onSubmit = (data: SubmitType) => {
     // This is where we'd submit the data to the server.
     console.log("finish submit", data);
   };
@@ -25,7 +33,7 @@ export default function App() {
               startBubble();
             }}
           >
-            <BubbleArray onBubble={onSubmit} length={ids.length}>
+            <BubbleArray<SubmitItem> onBubble={onSubmit} length={ids.length}>
               {(onBubble) =>
                 ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)
               }
@@ -43,7 +51,7 @@ function Child({
   onBubble,
 }: {
   id: string;
-  onBubble: (data: unknown) => void;
+  onBubble: (data: string) => void;
 }) {
   const [value, setValue] = useState(randomSuperbWord());
 
