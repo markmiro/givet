@@ -3,6 +3,8 @@ import { randomSuperbWord } from 'superb';
 import { BubbleArray, BubbleForm, useBubbler } from './bubbler';
 import { uid } from 'uid';
 import { z } from 'zod';
+import { Button } from './components/ui/button';
+import { Input } from './components/ui/input';
 
 const submitSchema = z.array(z.string());
 
@@ -20,16 +22,19 @@ export default function App() {
   };
 
   return (
-    <>
-      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-      <BubbleForm>
+    <div className="max-w-screen-sm mx-auto p-4 space-y-6">
+      <h1 className="text-3xl font-bold">Givet Form Example</h1>
+      <Button variant="secondary" onClick={() => setCount((count) => count + 1)}>
+        count is {count}
+      </Button>
+      <BubbleForm className="space-y-2">
         {/* You'd expect submit to be at the BubbleForm but it's not because for submission is only triggered at that level. The actual submission only happens when the data is done bubbling up */}
         <BubbleArray<SubmitItem> onBubble={onSubmit} length={ids.length}>
           {(onBubble) => ids.map((id) => <Child key={id} id={id} onBubble={onBubble} />)}
         </BubbleArray>
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </BubbleForm>
-    </>
+    </div>
   );
 }
 
@@ -41,7 +46,7 @@ function Child({ id, onBubble }: { id: string; onBubble: (data: string) => void 
   return (
     <div>
       <pre>{id}</pre>
-      <input value={value} onChange={(e) => setValue(e.target.value)} />
+      <Input value={value} onChange={(e) => setValue(e.target.value)} />
     </div>
   );
 }
