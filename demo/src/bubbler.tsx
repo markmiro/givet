@@ -1,11 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
 const BubbleContext = createContext<{
   bubbling: boolean;
@@ -19,7 +12,7 @@ export function BubbleProvider({
 }) {
   const [bubbling, setBubbling] = useState(false);
   const startBubble = () => {
-    console.log("start submit");
+    console.log('start submit');
     setBubbling(true);
   };
 
@@ -55,13 +48,13 @@ export function BubbleForm({
 export function useBubbler(cb: () => void) {
   const ctx = useContext(BubbleContext);
   if (!ctx) {
-    throw new Error("useBubbler must be used within a BubbleProvider");
+    throw new Error('useBubbler must be used within a BubbleProvider');
   }
   const { bubbling, setBubbling } = ctx;
 
   useEffect(() => {
     if (bubbling) {
-      console.log("submit cb()");
+      console.log('submit cb()');
       cb();
     }
     // batching means it doesn't matter how many times we call this.
