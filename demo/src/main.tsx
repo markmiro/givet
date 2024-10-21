@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Card } from './components/card';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
+import ZustandApp from './ZustandApp';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
           <TabsList>
             <TabsTrigger value="simple">Simple</TabsTrigger>
             <TabsTrigger value="company">Company</TabsTrigger>
+            <TabsTrigger value="zustand">Zustand</TabsTrigger>
           </TabsList>
           <TabsContent value="simple">
             <Card>
@@ -25,6 +27,11 @@ createRoot(document.getElementById('root')!).render(
           <TabsContent value="company">
             <Card>
               <CompanyApp />
+            </Card>
+          </TabsContent>
+          <TabsContent value="zustand">
+            <Card>
+              <ZustandApp />
             </Card>
           </TabsContent>
         </Tabs>
